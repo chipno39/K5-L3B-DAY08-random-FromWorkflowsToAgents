@@ -12,7 +12,7 @@
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
 |   1 | Nguyễn Xuân Đạt | 2A202603958 | xuandat31804@gmail.com | chipno39 | Hoàn thiện shape A + Intergration |
-|   2 |        |      |       |        |         |
+|   2 | Lại Trọng Đức       | 2A202604019     | 26ai.duclt2@vinuni.edu.vn      | laitrongduc | Single Agent (ReAct) + Policy |
 |   3 | Hoàng Xuân Lĩnh | 2A202604017 | ai26.linhhx@vinuni.edu.vn | hxlinh | Shape C (orchestrator) + Handoff & Trace security |
 |   4 | Nguyễn Bảo Trung | 2A202604013 | 26ai.trungnb@vinuni.edu.vn | trungnb | Người 4: Ledger/Crash + Evaluation, Benchmark & Research Card (B4) |
 
@@ -28,6 +28,7 @@ Gợi ý chia vai:
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
 | Nguyễn Xuân Đạt (2A202603958) | Workflow + Integration | `4f18f2a` (`src/lab8/shapes/workflow.py`) | `src/tests/test_compensation.py::test_workflow_ignores_ticket_delay_override_across_seeds` |
+| Lại Trọng Đức (2A202604019) | Single Agent (ReAct) + Policy | `00cd34c` (`src/lab8/shapes/single.py`) | `src/tests/test_order_cap_and_approval_binding.py::test_single_shape_rejects_approval_bound_to_another_claim`; `src/tests/test_public_matrix.py::test_public_matrix_cases` (test selector rename, assertions unchanged) |
 | Hoàng Xuân Lĩnh (2A202604017) | Orchestrator + Handoff & Trace security | `HASH` (`src/lab8/shapes/orchestrator.py`) | `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff` |
 | Nguyễn Bảo Trung (2A202604013) | Ledger/Crash + Evaluation, Benchmark & Research Card (B4) | `17c4e7b` (`src/tests/test_refund_idempotency.py`, `src/bonus/`) | `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`, `src/tests/test_bonus_b4.py` |
 
@@ -100,16 +101,23 @@ Sao chép mục dưới đây cho từng thành viên.
 - Report: `src/reports/benchmark.json`, `src/reports/bonus_benchmark.json`, `src/reports/bonus_ablation.json`.
 - Báo cáo cá nhân: `report/team/2A202604013_NguyenBaoTrung.md`.
 
-## MSSV_HoTen
+## 2A202604019_LaiTrongDuc
 
 ### Phần việc phụ trách
 
--
+- Triển khai Shape B `single` (Single Agent/ReAct) và phần policy-safe refund.
+- Bổ sung kiểm thử approval binding, so sánh workflow với single và ghi phần đóng góp vào báo cáo nhóm.
 
 ### Đóng góp cụ thể
 
--
+- Dùng `run_react` với giới hạn 8 lượt; vòng agent chỉ điều phối tool đọc. Tính quote bằng `compute_compensation` từ order và policy hiện hành, rồi chuyển quote đầy đủ cho host để kiểm tra approval/order cap/idempotency và ghi refund.
+- Lọc ticket và dữ liệu nhạy cảm khỏi trace; truyền `crash_at` tới `issue_refund` và để `InjectedCrash` được truyền tiếp.
+- Thêm test `test_single_shape_rejects_approval_bound_to_another_claim` trong `src/tests/test_order_cap_and_approval_binding.py`.
+- Đổi tên test ma trận chung thành `test_public_matrix_cases` để `-k single` chọn đúng shape theo parameter ID; không đổi assertions.
 
 ### Bằng chứng
 
--
+- Commit chính: `00cd34c`.
+- Kiểm tra: single 62 passed; workflow 62 passed; host 56 passed; crash suite 20/20; regression approval binding 1 passed.
+- Benchmark workflow/single: 70 trial mỗi shape; pass rate/pass^5 = 1.000; cost/success mô phỏng lần lượt 28.84 và 37.76 VND. File `src/reports/benchmark_workflow_single.json`.
+- Báo cáo cá nhân: `report/team/2A202604019_LaiTrongDuc.md`.
