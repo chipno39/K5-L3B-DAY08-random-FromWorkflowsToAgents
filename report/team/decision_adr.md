@@ -3,23 +3,23 @@
 Điền sau dấu `:` trên cùng dòng, không xóa nhãn. Giảng viên và `python -m lab8.check_submission` (chạy trong `src/`) đọc các dòng này bằng máy. Không đổi tên hay dời file này khỏi `report/team/`.
 `Shape chọn` phải là đúng một trong: `workflow`, `single`, `orchestrator`, `swarm`. Đây là shape được chấm cổng hidden.
 
-- Shape chọn:
-- Commit hash:
-- Run id dẫn chứng:
-- Pass rate / pass^5 / seed min-max / variance:
-- Cost per success (mô phỏng, VND):
-- Crash safety:
-- Secret leak / approval bypass:
+- Shape chọn: workflow
+- Commit hash: ee9e33d
+- Run id dẫn chứng: R-workflow-C-001-s11 (src/reports/benchmark.json)
+- Pass rate / pass^5 / seed min-max / variance: 1.000 / 1.000 / 1.000–1.000 / 0.000000
+- Cost per success (mô phỏng, VND): 28.84 (tổng 2018.60 VND / 70 trial thành công)
+- Crash safety: 20/20 (src/reports/crash.json)
+- Secret leak / approval bypass: 0 / 0 (70/70 trial public đạt chuẩn)
 
 Ví dụ một dòng đã điền: `- Shape chọn: workflow`, `- Crash safety: 20/20 (src/reports/crash.json)`.
 
 ## Vì sao shape này
 
-Viết 1 đoạn. So cùng corpus và cùng seed, không so với một lần chạy lẻ.
+Nhóm chọn `workflow` (Shape A — kiến trúc ít tự chủ nhất) vì trên cùng tập 14 claim public × 5 seed (`11, 22, 33, 44, 55`, tổng 70 trial/shape, cùng MockLLM và bảng giá), `workflow` đạt độ chính xác tuyệt đối (`pass_rate = 1.000`, `pass^5 = 1.000`, `seed_variance = 0.000000`) trong khi có chi phí mô phỏng thấp nhất: **28.84 VND/success** (so với `single` là **37.76 VND**, `orchestrator` là **49.19 VND**, và `swarm` là **49.57 VND** với `pass_rate = 0.986`, `pass^5 = 0.929` do fail T02 ở seed 55). Bài toán xử lý claim của LogiX-VN có quy trình nghiệp vụ xác định (đọc claim → kiểm tra quyền sở hữu đơn → tính bồi thường theo policy hiện hành → gọi `durability.issue_refund`), nên code xác định đảm bảo loại bỏ hoàn toàn rủi ro prompt injection từ nội dung ticket và giữ trace ngắn nhất (`mean_steps = 3.79`, `p95_steps = 4.0`).
 
 ## Có đáng đổi lấy multi-agent không
 
-Nếu pass nhỉnh hơn mà cost và variance cao hơn, nhóm giữ hay đổi? Điều kiện nào làm quyết định đảo lại?
+Không đáng đổi trong bối cảnh hiện tại. Trên cùng dữ liệu và seed, các kiến trúc có mức tự chủ cao hơn (`single`, `orchestrator`, `swarm`) không cải thiện được độ chính xác so với `workflow` (đều ≤ 1.000), nhưng làm chi phí mô phỏng tăng thêm từ **31%** (`single`) đến **72%** (`swarm`), số bước xử lý tăng lên (`mean_steps` 4.71–8.43 ở `orchestrator`/`single`), và ở `swarm` còn xuất hiện dao động theo seed (`seed_variance = 0.000816`, `seed_min = 0.929`). Quyết định này chỉ đảo lại nếu bài toán mở rộng sang các nghiệp vụ mơ hồ, phi cấu trúc cần suy luận đa nguồn (nhiều hệ thống tra cứu độc lập, cần đối thoại làm rõ nhiều vòng với khách hàng) khiến `workflow` cố định rớt pass rate xuống dưới `orchestrator` hoặc `single`, và mức tăng pass rate bù đắp được chi phí tăng thêm trong khi vẫn giữ `secret_leak = 0` và `approval_bypass = 0`.
 
 ## Trace và bằng chứng
 
