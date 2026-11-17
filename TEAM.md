@@ -13,6 +13,7 @@
 | --: | ------ | ---- | ----- | ------ | ------- |
 |   1 | Nguyễn Xuân Đạt | 2A202603958 | xuandat31804@gmail.com | chipno39 | Hoàn thiện shape A + Intergration |
 |   2 |        |      |       |        |         |
+|   3 | Hoàng Xuân Lĩnh | 2A202604017 | ai26.linhhx@vinuni.edu.vn | hxlinh | Shape C (orchestrator) + Handoff & Trace security |
 
 Gợi ý chia vai:
 
@@ -26,6 +27,7 @@ Gợi ý chia vai:
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
 | Nguyễn Xuân Đạt (2A202603958) | Workflow + Integration | `4f18f2a` (`src/lab8/shapes/workflow.py`) | `src/tests/test_compensation.py::test_workflow_ignores_ticket_delay_override_across_seeds` |
+| Hoàng Xuân Lĩnh (2A202604017) | Orchestrator + Handoff & Trace security | `HASH` (`src/lab8/shapes/orchestrator.py`) | `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff` |
 
 ## Cá nhân
 
@@ -56,6 +58,25 @@ Sao chép mục dưới đây cho từng thành viên.
 - Code: `src/lab8/shapes/workflow.py` (pass 62/62 test student `-k workflow`).
 - Test: `src/tests/test_compensation.py::test_workflow_ignores_ticket_delay_override_across_seeds`.
 - Báo cáo cá nhân: `report/team/2A202603958_NguyenXuanDat.md`.
+
+## 2A202604017_HoangXuanLinh
+
+### Phần việc phụ trách
+
+- Cài đặt Shape C (`orchestrator`) trong `src/lab8/shapes/orchestrator.py` và phần bảo mật Handoff & Trace.
+
+### Đóng góp cụ thể
+
+- Hoàn thiện `run_claim` của orchestrator: handoff dựng bằng `make_handoff` (allowlist, chỉ tool đọc), trace chỉ ghi handoff đã sanitize, orchestrator tự tính tiền và gọi `durability.issue_refund` với quote đầy đủ và `crash_at`.
+- Thêm 2 test vào `src/tests/test_handoff_secret.py`.
+- Viết mục "Trace và bằng chứng" trong `decision_adr.md` và tiểu mục "Shape C" trong `group_report.md`.
+
+### Bằng chứng
+
+- Commit chính: e315a51
+- Code: `src/lab8/shapes/orchestrator.py` (pass 62/62 test student `-k orchestrator`).
+- Test: `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff`.
+- Báo cáo cá nhân: `report/team/2A202604017_HoangXuanLinh.md`.
 
 ## MSSV_HoTen
 
