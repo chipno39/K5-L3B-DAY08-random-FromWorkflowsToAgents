@@ -37,7 +37,7 @@
 
 ## 4. Bằng chứng
 
-- Commit chính: 
+- Commit chính: e315a51
 - File code: `src/lab8/shapes/orchestrator.py`
 - Test: `src/tests/test_handoff_secret.py` (2 test mới, 1 test chạy trên 14 claim)
 - Kết quả chạy trên máy:

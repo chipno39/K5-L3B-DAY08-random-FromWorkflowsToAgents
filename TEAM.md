@@ -73,7 +73,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Bằng chứng
 
-- Commit chính: `HASH`
+- Commit chính: e315a51
 - Code: `src/lab8/shapes/orchestrator.py` (pass 62/62 test student `-k orchestrator`).
 - Test: `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff`.
 - Báo cáo cá nhân: `report/team/2A202604017_HoangXuanLinh.md`.
