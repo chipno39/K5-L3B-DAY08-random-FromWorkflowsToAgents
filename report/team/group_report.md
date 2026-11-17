@@ -6,7 +6,7 @@ Tối đa 5 trang ngoài phụ lục. Số liệu lấy từ file trong `src/rep
 
 - Tên nhóm: random
 - Thành viên: xem `TEAM.md`
-- Commit chốt (trùng `report/team/decision_adr.md`): *(chờ chốt ADR)*
+- Commit chốt (trùng `report/team/decision_adr.md`): 0e03bde
 
 ## 2. Mục tiêu và cách tiếp cận
 
