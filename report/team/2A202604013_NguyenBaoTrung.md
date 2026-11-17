@@ -13,7 +13,7 @@ Người 4 (nhóm `random`): Ledger/Crash + Evaluation, Benchmark & Research Car
 
 ## 3. Đóng góp cụ thể
 
-- Commit chính: `[Điền commit hash sau khi commit]`
+- Commit chính: `17c4e7b` (`feat(eval): add durability test, 4-shape benchmark, and B4 ablations`)
 - Test đã thêm:
   - `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`: kiểm chứng crash tại `after_effect_before_checkpoint` trên `C-011`, retry lệch số (`10000`) bị chặn bởi `amount_conflict` (giữ nguyên `35000` và ghi 1 audit `amount_conflict`), sau đó retry đúng số (`35000`) tự bù bảng `checkpoints` và trả `idempotent_replay` với đúng `1` dòng ledger và `1` audit `refund_committed`.
   - `src/tests/test_bonus_b4.py`: 5 test kiểm tra baseline `bonus.rules_only`, `bonus.swarm_pruned`, cluster bootstrap 95% CI theo `claim_id`, exact McNemar và tích hợp với `lab8.benchmark`.
@@ -26,7 +26,7 @@ Người 4 (nhóm `random`): Ledger/Crash + Evaluation, Benchmark & Research Car
 
 ## 4. Bằng chứng
 
-- Link commit: `[Điền link/hash commit sau khi commit & push]`
+- Link commit: [`17c4e7b`](https://github.com/chipno39/K5-L3B-DAY08-random-FromWorkflowsToAgents/commit/17c4e7b)
 - Tên test đã chạy:
   - `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`
   - `src/tests/test_bonus_b4.py` (`6 passed`)

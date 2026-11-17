@@ -29,7 +29,7 @@ Gợi ý chia vai:
 | --- | --- | --- | --- |
 | Nguyễn Xuân Đạt (2A202603958) | Workflow + Integration | `4f18f2a` (`src/lab8/shapes/workflow.py`) | `src/tests/test_compensation.py::test_workflow_ignores_ticket_delay_override_across_seeds` |
 | Hoàng Xuân Lĩnh (2A202604017) | Orchestrator + Handoff & Trace security | `HASH` (`src/lab8/shapes/orchestrator.py`) | `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff` |
-| Nguyễn Bảo Trung (2A202604013) | Ledger/Crash + Evaluation, Benchmark & Research Card (B4) | `PENDING_HASH` (`src/tests/test_refund_idempotency.py`, `src/bonus/`) | `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`, `src/tests/test_bonus_b4.py` |
+| Nguyễn Bảo Trung (2A202604013) | Ledger/Crash + Evaluation, Benchmark & Research Card (B4) | `17c4e7b` (`src/tests/test_refund_idempotency.py`, `src/bonus/`) | `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`, `src/tests/test_bonus_b4.py` |
 
 ## Cá nhân
 
@@ -95,7 +95,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 ### Bằng chứng
 
-- Commit chính: `PENDING_HASH`
+- Commit chính: `17c4e7b`
 - Test: `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`, `src/tests/test_bonus_b4.py` (6 passed).
 - Report: `src/reports/benchmark.json`, `src/reports/bonus_benchmark.json`, `src/reports/bonus_ablation.json`.
 - Báo cáo cá nhân: `report/team/2A202604013_NguyenBaoTrung.md`.
