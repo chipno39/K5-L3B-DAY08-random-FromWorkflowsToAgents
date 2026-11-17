@@ -14,7 +14,7 @@
 |   1 | Nguyễn Xuân Đạt | 2A202603958 | xuandat31804@gmail.com | chipno39 | Hoàn thiện shape A + Intergration |
 |   2 | Lại Trọng Đức       | 2A202604019     | 26ai.duclt2@vinuni.edu.vn      | laitrongduc | Single Agent (ReAct) + Policy |
 |   3 | Hoàng Xuân Lĩnh | 2A202604017 | ai26.linhhx@vinuni.edu.vn | hxlinh | Shape C (orchestrator) + Handoff & Trace security |
-|   4 | Nguyễn Bảo Trung | 2A202604013 | 26ai.trungnb@vinuni.edu.vn | trungnb | Người 4: Ledger/Crash + Evaluation, Benchmark & Research Card (B4) |
+|   4 | Nguyễn Bảo Trung | 2A202604013 | 26ai.trungnb@vinuni.edu.vn | trungnb | Ledger/Crash + Evaluation, Benchmark & Research Card (B4) |
 
 Gợi ý chia vai:
 
