@@ -14,6 +14,7 @@
 |   1 | Nguyễn Xuân Đạt | 2A202603958 | xuandat31804@gmail.com | chipno39 | Hoàn thiện shape A + Intergration |
 |   2 |        |      |       |        |         |
 |   3 | Hoàng Xuân Lĩnh | 2A202604017 | ai26.linhhx@vinuni.edu.vn | hxlinh | Shape C (orchestrator) + Handoff & Trace security |
+|   4 | Nguyễn Bảo Trung | 2A202604013 | 26ai.trungnb@vinuni.edu.vn | trungnb | Người 4: Ledger/Crash + Evaluation, Benchmark & Research Card (B4) |
 
 Gợi ý chia vai:
 
@@ -28,6 +29,7 @@ Gợi ý chia vai:
 | --- | --- | --- | --- |
 | Nguyễn Xuân Đạt (2A202603958) | Workflow + Integration | `4f18f2a` (`src/lab8/shapes/workflow.py`) | `src/tests/test_compensation.py::test_workflow_ignores_ticket_delay_override_across_seeds` |
 | Hoàng Xuân Lĩnh (2A202604017) | Orchestrator + Handoff & Trace security | `HASH` (`src/lab8/shapes/orchestrator.py`) | `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff` |
+| Nguyễn Bảo Trung (2A202604013) | Ledger/Crash + Evaluation, Benchmark & Research Card (B4) | `PENDING_HASH` (`src/tests/test_refund_idempotency.py`, `src/bonus/`) | `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`, `src/tests/test_bonus_b4.py` |
 
 ## Cá nhân
 
@@ -77,6 +79,26 @@ Sao chép mục dưới đây cho từng thành viên.
 - Code: `src/lab8/shapes/orchestrator.py` (pass 62/62 test student `-k orchestrator`).
 - Test: `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff`.
 - Báo cáo cá nhân: `report/team/2A202604017_HoangXuanLinh.md`.
+
+## 2A202604013_NguyenBaoTrung
+
+### Phần việc phụ trách
+
+- Người 4: Kiểm chứng Durability/Ledger (`buggy_workflow.py` vs `durability.py`), chạy đánh giá `benchmark` & `crash_test`, thực hiện Research Card **R4** và **Bonus B4**.
+
+### Đóng góp cụ thể
+
+- Thêm `test_crash_before_checkpoint_then_conflict_and_valid_retry` vào `src/tests/test_refund_idempotency.py`.
+- Xây dựng gói Bonus B4 trong `src/bonus/` (`rules_only.py`, `swarm_pruned.py`, `ablations.py`, `stats.py`) và 6 test trong `src/tests/test_bonus_b4.py`.
+- Sinh báo cáo đánh giá 4 shape (`src/reports/benchmark.json`) và phân tích ablation/thống kê (`src/reports/bonus_benchmark.json`, `src/reports/bonus_ablation.json`).
+- Soạn mục R4 trong `report/team/research_card.md`, `report/team/bonus_report.md` và phần đánh giá/durability trong `report/team/group_report.md`.
+
+### Bằng chứng
+
+- Commit chính: `PENDING_HASH`
+- Test: `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`, `src/tests/test_bonus_b4.py` (6 passed).
+- Report: `src/reports/benchmark.json`, `src/reports/bonus_benchmark.json`, `src/reports/bonus_ablation.json`.
+- Báo cáo cá nhân: `report/team/2A202604013_NguyenBaoTrung.md`.
 
 ## MSSV_HoTen
 

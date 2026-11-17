@@ -4,15 +4,16 @@ Tối đa 5 trang ngoài phụ lục. Số liệu lấy từ file trong `src/rep
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm:
+- Tên nhóm: random
 - Thành viên: xem `TEAM.md`
-- Commit chốt (trùng `report/team/decision_adr.md`):
+- Commit chốt (trùng `report/team/decision_adr.md`): *(chờ chốt ADR)*
 
 ## 2. Mục tiêu và cách tiếp cận
 
 Nhóm hiểu bài toán thế nào, chia việc ra sao, thứ tự làm bốn shape.
 
-...
+- Nhóm tiếp cận theo nguyên tắc giữ quyết định tiền (`compute_compensation`), quyền duyệt và ghi sổ cái (`durability.issue_refund`) hoàn toàn ở code/host, tách khỏi phần đọc hiểu hay soạn chữ của model; triển khai tuần tự từ `workflow` → `single` → `orchestrator` rồi đối chứng với `swarm`.
+- **Phụ trách Vị trí 4 (Nguyễn Bảo Trung — Durability, Evaluation & Research Card R4/B4):** Kiểm chứng cơ chế idempotent ledger `refund:{claim_id}` so với `buggy_workflow.py`, chạy benchmark công bằng 4 shape × 5 seed (`src/reports/benchmark.json`) và xây dựng bộ Bonus B4 (`src/bonus/`) kèm thống kê cluster bootstrap 95% CI và exact McNemar.
 
 ## 3. Giải pháp
 
@@ -59,9 +60,23 @@ Orchestrator chủ động truyền `facts={}`: lúc giao việc nó chưa biế
 
 **Ghi chú.** `run_readonly_investigators` hiện bỏ qua `get_clause` (`continue`). Nhóm vẫn cấp tool này theo phân công nhưng nó không gây tool call nào. Khi cần đọc clause, orchestrator vẫn phải tự kiểm `is_current`, vì `get_clause` trả cả policy cũ.
 
+### Phần đóng góp Người 4 (Nguyễn Bảo Trung): Durability, Evaluation & Bonus B4
+
+- **Idempotency & Crash Recovery:** Host dùng khóa `claim_id` / `idempotency_key = "refund:{claim_id}"` trong `refund_ledger` và ghi đồng thời `refund_committed` vào `audit_events` trong một transaction `BEGIN IMMEDIATE`, khắc phục lỗi ghi trùng khi mất checkpoint của `buggy_workflow.py`. Unit test mới `test_crash_before_checkpoint_then_conflict_and_valid_retry` (`src/tests/test_refund_idempotency.py`) xác nhận: crash tại `after_effect_before_checkpoint` trên `C-011` → retry lệch số (`10000`) bị chặn bởi `amount_conflict` mà không sửa `35000` trong ledger → retry đúng số (`35000`) tự bù bảng `checkpoints` với đúng `1` dòng ledger và `1` audit `refund_committed`.
+- **Đánh giá công bằng & B4 (`src/bonus/`):** Bổ sung baseline `rules_only` (`model_calls = 0`), `swarm_pruned` (cắt ngẫu nhiên `peer`/`parse` theo `(seed, claim_id)`), các biến thể ablation (`workflow_no_draft`, `workflow_trust_ticket`, `orchestrator_min_tools`), và `bonus/stats.py` (cluster bootstrap 95% CI theo `claim_id`, exact two-sided McNemar).
+
 ## 4. Kết quả
 
-Bảng so sánh 4 shape trên bộ public (từ `src/reports/benchmark.json`): pass rate, pass^5, seed min–max, variance, cost/success, mean/p95 steps. Kèm crash safety (`src/reports/crash.json`) và, nếu có, kết quả tự kiểm trên `student_drop/`.
+Bảng so sánh 4 shape trên bộ public (từ `src/reports/benchmark.json`, 14 claim × 5 seed = 70 trial/shape, `MockLLM`, `config/pricing.yaml`):
+
+| Shape | Pass rate | Pass^5 | Seed min–max | Variance | Cost/success (VND mô phỏng) | Mean / p95 steps | Mean model / tool calls |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `workflow` | 1.000 | 1.000 | 1.000–1.000 | 0.000000 | 28.84 | 3.79 / 4.0 | 1.00 / 2.79 |
+| `single` | 1.000 | 1.000 | 1.000–1.000 | 0.000000 | 37.76 | 8.43 / 9.0 | 2.79 / 3.64 |
+| `orchestrator` | 1.000 | 1.000 | 1.000–1.000 | 0.000000 | 49.19 | 4.71 / 5.0 | 1.93 / 4.64 |
+| `swarm` | 0.986 | 0.929 | 0.929–1.000 | 0.000816 | 49.57 | 2.80 / 3.0 | 3.00 / 4.66 |
+
+Cả 3 shape nhóm viết (`workflow`, `single`, `orchestrator`) đều đạt `70/70` (`pass_rate = 1.000`, `pass^5 = 1.000`, `seed_variance = 0`), vượt `swarm` tham chiếu (`69/70` do lỗi seed `55` ở `C-002`). Trong đó `workflow` có chi phí mô phỏng thấp nhất (`28.84 VND/success`, thấp hơn `single` 23.6% và thấp hơn `orchestrator` 41.4%). Kết quả ablation và kiểm định thống kê xem thêm trong `report/team/research_card.md`, `report/team/bonus_report.md` và `src/reports/bonus_ablation.json`.
 
 #### So sánh workflow và single (đóng góp Người 2)
 
@@ -98,8 +113,11 @@ Chi tiết đóng góp của từng thành viên nằm trong `TEAM.md` (bảng �
 
 MockLLM không phải model sản xuất; latency là `unavailable`. Nêu thêm giới hạn của nhóm và điều kiện làm kết luận thay đổi.
 
-...
+- **Giới hạn đo lường (Vị trí 4):**
+  - Bộ public chỉ có 14 claim (70 trial ở 5 seed): chênh lệch `1` trial giữa `workflow` và `swarm` (`b=1, c=0`) cho exact McNemar `p = 1.0000`, chưa đủ lực thống kê để kết luận chênh `pass_rate` chỉ từ bộ public; cần đối chiếu thêm trên bộ hidden (40 claim × 5 seed = 200 trial).
+  - Bảng giá mô phỏng `config/pricing.yaml` đặt `tool_call_vnd = 10` (cao gấp ~10 lần một lần gọi `MockLLM` ngắn ~1 VND), nên chi phí mô phỏng nhạy mạnh với số lượng tool call hơn là token của LLM; trên production với LLM thật và bài toán đòi hỏi suy luận phức tạp không cấu trúc sẵn, thứ hạng giữa `workflow`, `single` và `orchestrator` có thể thay đổi.
 
 ## 8. Tài liệu tham khảo
 
-...
+- Tài liệu bài lab: [docs/business_rules.md](../../docs/business_rules.md), [docs/contracts.md](../../docs/contracts.md), [docs/metrics.md](../../docs/metrics.md), [docs/architecture.md](../../docs/architecture.md).
+- Zhang et al. (EMNLP 2026). *Rethinking the Evaluation of Efficiency Methods for Multi-Agent Systems*. https://arxiv.org/abs/2609.05933.

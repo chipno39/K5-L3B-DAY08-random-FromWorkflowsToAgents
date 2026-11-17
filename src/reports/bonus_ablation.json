@@ -1,0 +1,495 @@
+{
+  "controlled_variables": {
+    "as_of": "2026-11-15",
+    "seeds": [
+      11,
+      22,
+      33,
+      44,
+      55
+    ],
+    "claim_ids": [
+      "C-001",
+      "C-002",
+      "C-003",
+      "C-004",
+      "C-005",
+      "C-006",
+      "C-007",
+      "C-008",
+      "C-009",
+      "C-010",
+      "C-011",
+      "C-012",
+      "C-013",
+      "C-014"
+    ],
+    "pricing": {
+      "simulated": true,
+      "currency": "VND",
+      "input_per_1k_tokens_vnd": 20,
+      "output_per_1k_tokens_vnd": 80,
+      "tool_call_vnd": 10
+    },
+    "model_backend": "MockLLM",
+    "latency": "unavailable",
+    "isolation": "fresh_sqlite_per_trial"
+  },
+  "bootstrap": {
+    "n_boot": 2000,
+    "rng_seed": 42,
+    "cluster": "claim_id"
+  },
+  "by_shape": {
+    "workflow": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 70
+      },
+      "successes": 70,
+      "pass_rate": 1.0,
+      "pass_5": 1.0,
+      "seed_pass_rates": {
+        "11": 1.0,
+        "22": 1.0,
+        "33": 1.0,
+        "44": 1.0,
+        "55": 1.0
+      },
+      "seed_variance": 0.0,
+      "seed_min": 1.0,
+      "seed_max": 1.0,
+      "cost_per_success_vnd": 28.837142857142855,
+      "total_simulated_cost_vnd": 2018.6,
+      "mean_steps": 3.7857142857142856,
+      "p95_steps": 4.0,
+      "mean_model_calls": 1.0,
+      "mean_tool_calls": 2.7857142857142856,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    },
+    "single": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 70
+      },
+      "successes": 70,
+      "pass_rate": 1.0,
+      "pass_5": 1.0,
+      "seed_pass_rates": {
+        "11": 1.0,
+        "22": 1.0,
+        "33": 1.0,
+        "44": 1.0,
+        "55": 1.0
+      },
+      "seed_variance": 0.0,
+      "seed_min": 1.0,
+      "seed_max": 1.0,
+      "cost_per_success_vnd": 37.76428571428571,
+      "total_simulated_cost_vnd": 2643.5,
+      "mean_steps": 8.428571428571429,
+      "p95_steps": 9.0,
+      "mean_model_calls": 2.7857142857142856,
+      "mean_tool_calls": 3.642857142857143,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    },
+    "orchestrator": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 70
+      },
+      "successes": 70,
+      "pass_rate": 1.0,
+      "pass_5": 1.0,
+      "seed_pass_rates": {
+        "11": 1.0,
+        "22": 1.0,
+        "33": 1.0,
+        "44": 1.0,
+        "55": 1.0
+      },
+      "seed_variance": 0.0,
+      "seed_min": 1.0,
+      "seed_max": 1.0,
+      "cost_per_success_vnd": 49.18857142857143,
+      "total_simulated_cost_vnd": 3443.2,
+      "mean_steps": 4.714285714285714,
+      "p95_steps": 5.0,
+      "mean_model_calls": 1.9285714285714286,
+      "mean_tool_calls": 4.642857142857143,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    },
+    "swarm": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 69,
+        "status resolved != denied": 1
+      },
+      "successes": 69,
+      "pass_rate": 0.9857142857142858,
+      "pass_5": 0.9285714285714286,
+      "seed_pass_rates": {
+        "11": 1.0,
+        "22": 1.0,
+        "33": 1.0,
+        "44": 1.0,
+        "55": 0.9285714285714286
+      },
+      "seed_variance": 0.0008163265306122443,
+      "seed_min": 0.9285714285714286,
+      "seed_max": 1.0,
+      "cost_per_success_vnd": 49.56695652173913,
+      "total_simulated_cost_vnd": 3420.12,
+      "mean_steps": 2.8,
+      "p95_steps": 3.0,
+      "mean_model_calls": 3.0,
+      "mean_tool_calls": 4.6571428571428575,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 0.9857142857142858,
+        "ci_low": 0.9571428571428572,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    },
+    "rules_only": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 70
+      },
+      "successes": 70,
+      "pass_rate": 1.0,
+      "pass_5": 1.0,
+      "seed_pass_rates": {
+        "11": 1.0,
+        "22": 1.0,
+        "33": 1.0,
+        "44": 1.0,
+        "55": 1.0
+      },
+      "seed_variance": 0.0,
+      "seed_min": 1.0,
+      "seed_max": 1.0,
+      "cost_per_success_vnd": 27.857142857142858,
+      "total_simulated_cost_vnd": 1950.0,
+      "mean_steps": 3.7857142857142856,
+      "p95_steps": 4.0,
+      "mean_model_calls": 0.0,
+      "mean_tool_calls": 2.7857142857142856,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    },
+    "swarm_pruned": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 69,
+        "status resolved != denied": 1
+      },
+      "successes": 69,
+      "pass_rate": 0.9857142857142858,
+      "pass_5": 0.9285714285714286,
+      "seed_pass_rates": {
+        "11": 1.0,
+        "22": 1.0,
+        "33": 1.0,
+        "44": 1.0,
+        "55": 0.9285714285714286
+      },
+      "seed_variance": 0.0008163265306122443,
+      "seed_min": 0.9285714285714286,
+      "seed_max": 1.0,
+      "cost_per_success_vnd": 48.90492753623189,
+      "total_simulated_cost_vnd": 3374.44,
+      "mean_steps": 3.8,
+      "p95_steps": 4.0,
+      "mean_model_calls": 2.085714285714286,
+      "mean_tool_calls": 4.6571428571428575,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 0.9857142857142858,
+        "ci_low": 0.9571428571428572,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    },
+    "workflow_no_draft": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 70
+      },
+      "successes": 70,
+      "pass_rate": 1.0,
+      "pass_5": 1.0,
+      "seed_pass_rates": {
+        "11": 1.0,
+        "22": 1.0,
+        "33": 1.0,
+        "44": 1.0,
+        "55": 1.0
+      },
+      "seed_variance": 0.0,
+      "seed_min": 1.0,
+      "seed_max": 1.0,
+      "cost_per_success_vnd": 27.857142857142858,
+      "total_simulated_cost_vnd": 1950.0,
+      "mean_steps": 3.7857142857142856,
+      "p95_steps": 4.0,
+      "mean_model_calls": 0.0,
+      "mean_tool_calls": 2.7857142857142856,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    },
+    "workflow_trust_ticket": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 65,
+        "status resolved != denied": 5
+      },
+      "successes": 65,
+      "pass_rate": 0.9285714285714286,
+      "pass_5": 0.9285714285714286,
+      "seed_pass_rates": {
+        "11": 0.9285714285714286,
+        "22": 0.9285714285714286,
+        "33": 0.9285714285714286,
+        "44": 0.9285714285714286,
+        "55": 0.9285714285714286
+      },
+      "seed_variance": 0.0,
+      "seed_min": 0.9285714285714286,
+      "seed_max": 0.9285714285714286,
+      "cost_per_success_vnd": 31.064615384615387,
+      "total_simulated_cost_vnd": 2019.2,
+      "mean_steps": 3.857142857142857,
+      "p95_steps": 5.0,
+      "mean_model_calls": 1.0,
+      "mean_tool_calls": 2.7857142857142856,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 0.9285714285714286,
+        "ci_low": 0.7857142857142857,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    },
+    "orchestrator_min_tools": {
+      "trials": 70,
+      "graded_trials": 70,
+      "reasons": {
+        "ok": 70
+      },
+      "successes": 70,
+      "pass_rate": 1.0,
+      "pass_5": 1.0,
+      "seed_pass_rates": {
+        "11": 1.0,
+        "22": 1.0,
+        "33": 1.0,
+        "44": 1.0,
+        "55": 1.0
+      },
+      "seed_variance": 0.0,
+      "seed_min": 1.0,
+      "seed_max": 1.0,
+      "cost_per_success_vnd": 39.642857142857146,
+      "total_simulated_cost_vnd": 2775.0,
+      "mean_steps": 4.714285714285714,
+      "p95_steps": 5.0,
+      "mean_model_calls": 1.9285714285714286,
+      "mean_tool_calls": 3.7142857142857144,
+      "cost_note": "simulated_not_real_api_price",
+      "latency": "unavailable",
+      "pass_rate_ci95": {
+        "point": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "n_claims": 14,
+        "n_trials": 70,
+        "resamples": 2000,
+        "rng_seed": 42
+      }
+    }
+  },
+  "pairwise_comparisons": [
+    {
+      "shape_a": "rules_only",
+      "shape_b": "swarm",
+      "n_pairs": 70,
+      "rate_a": 1.0,
+      "rate_b": 0.9857142857142858,
+      "delta_pass_rate": 0.014285714285714235,
+      "both_pass": 69,
+      "a_only": 1,
+      "b_only": 0,
+      "both_fail": 0,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_two_sided"
+    },
+    {
+      "shape_a": "swarm_pruned",
+      "shape_b": "swarm",
+      "n_pairs": 70,
+      "rate_a": 0.9857142857142858,
+      "rate_b": 0.9857142857142858,
+      "delta_pass_rate": 0.0,
+      "both_pass": 69,
+      "a_only": 0,
+      "b_only": 0,
+      "both_fail": 1,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_two_sided"
+    },
+    {
+      "shape_a": "workflow_no_draft",
+      "shape_b": "workflow",
+      "n_pairs": 70,
+      "rate_a": 1.0,
+      "rate_b": 1.0,
+      "delta_pass_rate": 0.0,
+      "both_pass": 70,
+      "a_only": 0,
+      "b_only": 0,
+      "both_fail": 0,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_two_sided"
+    },
+    {
+      "shape_a": "workflow_trust_ticket",
+      "shape_b": "workflow",
+      "n_pairs": 70,
+      "rate_a": 0.9285714285714286,
+      "rate_b": 1.0,
+      "delta_pass_rate": -0.0714285714285714,
+      "both_pass": 65,
+      "a_only": 0,
+      "b_only": 5,
+      "both_fail": 0,
+      "p_value": 0.0625,
+      "method": "exact_mcnemar_two_sided"
+    },
+    {
+      "shape_a": "orchestrator_min_tools",
+      "shape_b": "orchestrator",
+      "n_pairs": 70,
+      "rate_a": 1.0,
+      "rate_b": 1.0,
+      "delta_pass_rate": 0.0,
+      "both_pass": 70,
+      "a_only": 0,
+      "b_only": 0,
+      "both_fail": 0,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_two_sided"
+    },
+    {
+      "shape_a": "single",
+      "shape_b": "workflow",
+      "n_pairs": 70,
+      "rate_a": 1.0,
+      "rate_b": 1.0,
+      "delta_pass_rate": 0.0,
+      "both_pass": 70,
+      "a_only": 0,
+      "b_only": 0,
+      "both_fail": 0,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_two_sided"
+    },
+    {
+      "shape_a": "orchestrator",
+      "shape_b": "workflow",
+      "n_pairs": 70,
+      "rate_a": 1.0,
+      "rate_b": 1.0,
+      "delta_pass_rate": 0.0,
+      "both_pass": 70,
+      "a_only": 0,
+      "b_only": 0,
+      "both_fail": 0,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_two_sided"
+    },
+    {
+      "shape_a": "swarm",
+      "shape_b": "workflow",
+      "n_pairs": 70,
+      "rate_a": 0.9857142857142858,
+      "rate_b": 1.0,
+      "delta_pass_rate": -0.014285714285714235,
+      "both_pass": 69,
+      "a_only": 0,
+      "b_only": 1,
+      "both_fail": 0,
+      "p_value": 1.0,
+      "method": "exact_mcnemar_two_sided"
+    }
+  ]
+}
