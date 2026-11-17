@@ -18,13 +18,34 @@ Nhóm hiểu bài toán thế nào, chia việc ra sao, thứ tự làm bốn sh
 
 Mô tả ba shape nhóm viết (workflow, single, orchestrator): mỗi shape đọc gì, quyết định gì, gọi host ra sao. Chỉ rõ ranh giới code / model (tham khảo [docs/architecture.md](../../docs/architecture.md)), cách handoff được sanitize và trace ghi những event nào.
 
-...
+### Phần đóng góp Người 2: Single Agent (ReAct) + Policy
+
+Shape `single` chạy vòng ReAct qua `lab8.runtime.run_react` với giới hạn 8 bước. Agent chỉ điều phối các tool đọc `get_claim_view`, `lookup_order` và `lookup_refund_history`; không có tool ghi refund. Ticket không được đưa vào prompt hay trace. Sau khi đọc order, code gọi `compute_compensation` trên order view, nên số ngày do khách tự khai và policy cũ trong ticket không quyết định số tiền. Quote đầy đủ được chuyển cho `durability.issue_refund`; host kiểm approval gắn với đúng claim, giới hạn hoàn theo order, idempotency và ghi ledger/audit. Trace chỉ ghi field đã lọc, quote, quyết định và tên tool.
+
+`MockLLM` được gọi trong từng lượt ReAct để ghi nhận model calls và chi phí mô phỏng. Vì MockLLM của lab chỉ trả text tổng quát, trình điều khiển trong `decide` quyết định tuần tự các tool đọc dựa trên trạng thái quan sát; kết quả của model không được dùng để chọn tiền hay quyền ghi.
 
 ## 4. Kết quả
 
 Bảng so sánh 4 shape trên bộ public (từ `src/reports/benchmark.json`): pass rate, pass^5, seed min–max, variance, cost/success, mean/p95 steps. Kèm crash safety (`src/reports/crash.json`) và, nếu có, kết quả tự kiểm trên `student_drop/`.
 
-...
+#### So sánh workflow và single (đóng góp Người 2)
+
+Benchmark đối chiếu riêng hai shape trên cùng 14 public claims × 5 seed (70 trial/shape), dùng MockLLM và cùng cấu hình giá. File được sinh bằng `lab8.benchmark` tại `src/reports/benchmark_workflow_single.json`; đây là phép so sánh hai shape, chưa thay thế benchmark nộp bài đủ bốn shape ở `src/reports/benchmark.json`.
+
+| Shape | Pass rate | Pass^5 | Seed min–max | Variance | Cost/success (VND mô phỏng) | Mean / p95 steps | Mean model / tool calls |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| workflow | 1.000 | 1.000 | 1.000–1.000 | 0.000000 | 28.84 | 3.79 / 4 | 1.00 / 2.79 |
+| single | 1.000 | 1.000 | 1.000–1.000 | 0.000000 | 37.76 | 8.43 / 9 | 2.79 / 3.64 |
+
+Trên bộ public này, cả hai shape đều pass toàn bộ trial và không dao động giữa seed. `single` tốn chi phí mô phỏng cao hơn khoảng 31% mỗi lần thành công, đồng thời có nhiều bước trace và nhiều lần gọi model/tool hơn. Kết quả này cho thấy vòng ReAct chưa cải thiện độ đúng trên corpus public so với workflow cố định; nó chỉ cho phép cấu trúc điều phối đọc linh hoạt hơn. Đây là kết quả của MockLLM và 14 claims public, không chứng minh hiệu năng tương tự với model hoặc dữ liệu production. Latency không được đo.
+
+Lệnh tạo file so sánh:
+
+```bash
+python -m lab8.benchmark --shapes workflow,single --cases data/public_claims.jsonl --seeds 11,22,33,44,55 --out reports/benchmark_workflow_single.json
+```
+
+Crash suite của nhánh hiện tại: `crash_safety` = `20/20`, được tạo tại `src/reports/crash.json`.
 
 Quyết định kiến trúc và lý do: xem `report/team/decision_adr.md`. Phiếu nghiên cứu và ablation: xem `report/team/research_card.md`.
 
@@ -32,7 +53,7 @@ Quyết định kiến trúc và lý do: xem `report/team/decision_adr.md`. Phi�
 
 Lỗi gặp phải (kèm lệnh, output hoặc ảnh chụp) và cách nhóm xử lý.
 
-...
+Ban đầu lệnh yêu cầu `python -m pytest -q -m student -o addopts= -k single` chọn thêm shape khác do tên test ma trận chung `test_public_single_run_cases` cũng chứa từ `single`. Đổi tên hàm ma trận thành `test_public_matrix_cases` để `-k single` lọc đúng shape theo parameter ID; không đổi assertion hay coverage. Sau sửa, lệnh nguyên văn đạt 62 passed. Test mới về approval mượn của claim khác: 1 passed. Cổng host: 56 passed, 248 deselected.
 
 ## 6. Tổng hợp đóng góp
 
