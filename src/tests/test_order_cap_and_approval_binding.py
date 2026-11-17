@@ -6,6 +6,7 @@ from lab8.metrics import trial_pass, unexpected_ledger_rows
 from lab8.policy import order_refunded_vnd
 from lab8.runtime import dispatch
 from lab8.schemas import Budget
+from lab8.shapes.single import run_claim as run_single
 from lab8.tools import lookup_refund_history
 
 
@@ -105,6 +106,25 @@ def test_approval_issued_for_another_claim_is_rejected(public_db):
     denials = _denials(conn, "C-BORROW")
     conn.close()
     assert outcome["reason"] == "approval_claim_mismatch"
+    assert effect is None
+    assert any("approval_claim_mismatch" in row for row in denials)
+
+
+def test_single_shape_rejects_approval_bound_to_another_claim(public_db):
+    """Single may propose a valid quote, but the host binds approval to this claim."""
+    conn = connect(public_db)
+    _add_claim(conn, "C-SINGLE-BORROW", "O-107", "A-001")  # A-001 belongs to C-001
+    conn.commit()
+    conn.close()
+
+    result = run_single("C-SINGLE-BORROW", seed=11, store_path=str(public_db))
+
+    conn = connect(public_db)
+    effect = get_refund(conn, "C-SINGLE-BORROW")
+    denials = _denials(conn, "C-SINGLE-BORROW")
+    conn.close()
+    assert result.status == "denied"
+    assert result.proposal_amount == 35000
     assert effect is None
     assert any("approval_claim_mismatch" in row for row in denials)
 

@@ -20,3 +20,10 @@ src/reports/bonus_hidden.json
 
 # Instructor-only hidden pack. Never push it to this repo.
 src/eval/instructor/
+
+# Locally installed Universal Software Agent Kit (keep out of submissions).
+/AGENTS.md
+/docs/agent/
+/scripts/agent_context.py
+/tests/test_agent_context.py
+/.agent/universal/
