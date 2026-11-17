@@ -19,7 +19,7 @@ Nhóm hiểu bài toán thế nào, chia việc ra sao, thứ tự làm bốn sh
 
 Mô tả ba shape nhóm viết (workflow, single, orchestrator): mỗi shape đọc gì, quyết định gì, gọi host ra sao. Chỉ rõ ranh giới code / model (tham khảo [docs/architecture.md](../../docs/architecture.md)), cách handoff được sanitize và trace ghi những event nào.
 
-### Phần đóng góp Người 2: Single Agent (ReAct) + Policy
+### Phần đóng góp Người 2 (Lại Trọng Đức): Single Agent (ReAct) + Policy
 
 Shape `single` chạy vòng ReAct qua `lab8.runtime.run_react` với giới hạn 8 bước. Agent chỉ điều phối các tool đọc `get_claim_view`, `lookup_order` và `lookup_refund_history`; không có tool ghi refund. Ticket không được đưa vào prompt hay trace. Sau khi đọc order, code gọi `compute_compensation` trên order view, nên số ngày do khách tự khai và policy cũ trong ticket không quyết định số tiền. Quote đầy đủ được chuyển cho `durability.issue_refund`; host kiểm approval gắn với đúng claim, giới hạn hoàn theo order, idempotency và ghi ledger/audit. Trace chỉ ghi field đã lọc, quote, quyết định và tên tool.
 
