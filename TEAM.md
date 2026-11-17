@@ -29,7 +29,7 @@ Gợi ý chia vai:
 | --- | --- | --- | --- |
 | Nguyễn Xuân Đạt (2A202603958) | Workflow + Integration | `4f18f2a` (`src/lab8/shapes/workflow.py`) | `src/tests/test_compensation.py::test_workflow_ignores_ticket_delay_override_across_seeds` |
 | Lại Trọng Đức (2A202604019) | Single Agent (ReAct) + Policy | `00cd34c` (`src/lab8/shapes/single.py`) | `src/tests/test_order_cap_and_approval_binding.py::test_single_shape_rejects_approval_bound_to_another_claim`; `src/tests/test_public_matrix.py::test_public_matrix_cases` (test selector rename, assertions unchanged) |
-| Hoàng Xuân Lĩnh (2A202604017) | Orchestrator + Handoff & Trace security | `HASH` (`src/lab8/shapes/orchestrator.py`) | `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff` |
+| Hoàng Xuân Lĩnh (2A202604017) | Orchestrator + Handoff & Trace security | `e315a51` (`src/lab8/shapes/orchestrator.py`) | `src/tests/test_handoff_secret.py::test_make_handoff_drops_unlisted_facts_and_refuses_smuggled_secret`, `src/tests/test_handoff_secret.py::test_orchestrator_trace_has_only_sanitized_handoff` |
 | Nguyễn Bảo Trung (2A202604013) | Ledger/Crash + Evaluation, Benchmark & Research Card (B4) | `17c4e7b` (`src/tests/test_refund_idempotency.py`, `src/bonus/`) | `src/tests/test_refund_idempotency.py::test_crash_before_checkpoint_then_conflict_and_valid_retry`, `src/tests/test_bonus_b4.py` |
 
 ## Cá nhân
