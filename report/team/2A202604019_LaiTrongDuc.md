@@ -9,7 +9,7 @@
 
 ## 2. Phần việc phụ trách
 
-Người 2 — triển khai Shape B `single` (Single Agent/ReAct) và policy-safe refund. Phụ trách `src/lab8/shapes/single.py`, bổ sung test approval binding, so sánh workflow với single và ghi phần kết quả liên quan trong báo cáo nhóm.
+Triển khai Shape B `single` (Single Agent/ReAct) và policy-safe refund. Phụ trách `src/lab8/shapes/single.py`, bổ sung test approval binding, so sánh workflow với single và ghi phần kết quả liên quan trong báo cáo nhóm.
 
 ## 3. Đóng góp cụ thể
 
