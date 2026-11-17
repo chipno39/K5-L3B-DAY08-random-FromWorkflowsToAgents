@@ -67,3 +67,15 @@ def test_get_clause_still_returns_old_clause(tmp_path):
     assert old["found"] is True
     assert old["is_current"] is False
     assert [row["policy_id"] for row in current["policies"]] == ["POL-2026-11"]
+
+
+def test_workflow_ignores_ticket_delay_override_across_seeds(tmp_path):
+    from lab8.shapes.workflow import run_claim
+
+    for seed in (11, 55):
+        store = tmp_path / f"wf-c002-{seed}.sqlite"
+        init_store(store, WORLD, CLAIMS).close()
+        res = run_claim("C-002", seed=seed, store_path=str(store))
+        assert res.status == "denied"
+        assert res.proposal_amount == 0
+        assert res.refund_effects == []
