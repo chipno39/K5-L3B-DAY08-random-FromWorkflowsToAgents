@@ -95,7 +95,7 @@ Lệnh tạo file so sánh:
 python -m lab8.benchmark --shapes workflow,single --cases data/public_claims.jsonl --seeds 11,22,33,44,55 --out reports/benchmark_workflow_single.json
 ```
 
-Crash suite của nhánh hiện tại: `crash_safety` = `20/20`, được tạo tại `src/reports/crash.json`.
+Crash suite của nhánh hiện tại: `crash_safety` = `20/20`, được tạo tại `src/reports/crash.json`. Tự kiểm trên bộ hidden không nhãn (`src/reports/hidden_selfcheck.json`, 40 claim `C-H01..C-H40` × 5 seed = 200 trial/shape): cả ba shape (`workflow`, `single`, `orchestrator`) đều đạt `error_trials = 0`, `leak_suspect_trials = 0`, phân bố trạng thái khớp nhau (`denied: 95, resolved: 90, needs_info: 5, escalated: 10`), trong đó `workflow` giữ tổng chi phí mô phỏng thấp nhất (`5995.30 VND` so với `7928.30 VND` của `single` và `10269.20 VND` của `orchestrator`).
 
 Quyết định kiến trúc và lý do: xem `report/team/decision_adr.md`. Phiếu nghiên cứu và ablation: xem `report/team/research_card.md`.
 
@@ -111,8 +111,7 @@ Chi tiết đóng góp của từng thành viên nằm trong `TEAM.md` (bảng �
 
 ## 7. Hạn chế và hướng cải thiện
 
-MockLLM không phải model sản xuất; latency là `unavailable`. Nêu thêm giới hạn của nhóm và điều kiện làm kết luận thay đổi.
-
+- `MockLLM` không phải model sản xuất và `latency` là `unavailable`; cần kiểm chứng thêm với model thật trên dữ liệu phi cấu trúc và độ trễ mạng thực tế (nếu bài toán không còn cấu trúc sẵn hoặc cần điều tra song song đa nguồn, kết luận ưu thế chi phí/độ đúng của `workflow` có thể thay đổi).
 - **Giới hạn đo lường (Vị trí 4):**
   - Bộ public chỉ có 14 claim (70 trial ở 5 seed): chênh lệch `1` trial giữa `workflow` và `swarm` (`b=1, c=0`) cho exact McNemar `p = 1.0000`, chưa đủ lực thống kê để kết luận chênh `pass_rate` chỉ từ bộ public; cần đối chiếu thêm trên bộ hidden (40 claim × 5 seed = 200 trial).
   - Bảng giá mô phỏng `config/pricing.yaml` đặt `tool_call_vnd = 10` (cao gấp ~10 lần một lần gọi `MockLLM` ngắn ~1 VND), nên chi phí mô phỏng nhạy mạnh với số lượng tool call hơn là token của LLM; trên production với LLM thật và bài toán đòi hỏi suy luận phức tạp không cấu trúc sẵn, thứ hạng giữa `workflow`, `single` và `orchestrator` có thể thay đổi.
